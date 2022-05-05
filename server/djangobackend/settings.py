@@ -27,7 +27,7 @@ DEBUG = True
 
 APPEND_SLASH = True
 
-ALLOWED_HOSTS = [obiradanieldjango.mybluemix.net]
+ALLOWED_HOSTS = ["obiradanieldjango.mybluemix.net"]
 
 
 # Application definition
