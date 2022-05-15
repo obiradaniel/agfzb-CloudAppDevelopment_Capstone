@@ -54,24 +54,23 @@ class CarModel(models.Model):
     dealer_id = models.IntegerField(null=False)
     Sedan = "Sedan" 
     SUV = "Volkswagen" 
-    Truck = "Mitsubishi" 
-    MiniVan  = "Mitsubishi" 
-    Van = "Mitsubishi" 
-    Bus = "Mitsubishi" 
-    MiniBus = "Mitsubishi" 
-    Bus = "Mitsubishi" 
-    Wagon = "Mitsubishi" 
+    Truck = "Truck" 
+    MiniVan  = "MiniVan" 
+    Van = "Van" 
+    Bus = "Bus" 
+    MiniBus = "MiniBus" 
+    Bus = "Bus" 
+    Wagon = "Wagon" 
     Pick_up = "Pick Up"
     cartype_choices = [
     (Sedan,"Sedan"),
-    (SUV, "Volkswagen"),
-    (Truck, "Mitsubishi"),
-    (MiniVan, "Mitsubishi"),
-    (Van, "Mitsubishi"),
-    (Bus, "Mitsubishi"),
-    (MiniBus, "Mitsubishi"),
-    (Bus, "Mitsubishi"),
-    (Wagon, "Mitsubishi"),
+    (SUV, "SUV"),
+    (Truck, "Truck"),
+    (MiniVan, "MiniVan"),
+    (Van, "Van"),
+    (Bus, "Bus"),
+    (MiniBus, "MiniBus"),
+    (Wagon, "Wagon"),
     (Pick_up, "Pick Up")]
     car_type = models.CharField(null=False, max_length=20, choices=cartype_choices, default=Sedan)
     year = models.DateField(null=False)
@@ -95,25 +94,26 @@ class CarModel(models.Model):
 # <HINT> Create a plain Python class `CarDealer` to hold dealer data
 
 class CarDealer:
-    def __init__(self, id, city, state, st, address, zip, lat, long, short_name, full_name):
-        self.id = id,
-        self.city = city, 
-        self.state = state, 
-        self.st = st, 
-        self.address = address, 
-        self.zip = zip, 
-        self.lat = lat,
-        self.long = long,
-        self.short_name = short_name,
+    def __init__(self, id, city, state, st, address, zip, lat, long, short_name, full_name, totalreviews=0):
+        self.id = id
+        self.city = city
+        self.state = state
+        self.st = st
+        self.address = address
+        self.zip = zip
+        self.lat = lat
+        self.long = long
+        self.short_name = short_name
         self.full_name = full_name
+        self.totalreviews = totalreviews
 
     def __str__(self):
-        return self.short_name + " " + self.city + " " + self.st
+        return str(self.full_name) + ", Id: " + str(self.id) + ", " + str(self.city) + ", " + str(self.st)
 
 false = False
 # <HINT> Create a plain Python class `DealerReview` to hold review data
 class DealerReview:
-    def __init__(self, id, name, dealership, review, purchase, purchase_date, car_make, car_model, car_year, another):
+    def __init__(self, id, name, dealership, review, purchase, purchase_date, car_make, car_model, car_year, another="another", sentiment=None):
         self.id=id
         self.name=name
         self.dealership=dealership
@@ -124,9 +124,10 @@ class DealerReview:
         self.car_model=car_model
         self.car_year=car_year
         self.another=another
+        self.sentiment=sentiment
 
     def __str__(self):
-        return self.review + " " + self.car_model + "by " + self.name
+        return self.review + " " + self.car_model + " by " + self.name + ": " + self.sentiment.title()
 
 
 django_model_fields_rels_etc = ['Aggregate',

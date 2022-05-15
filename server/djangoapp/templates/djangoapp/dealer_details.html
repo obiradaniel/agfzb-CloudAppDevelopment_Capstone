@@ -10,8 +10,54 @@
     <body>
 
     <!--Add a nav bar here -->
-
+    <nav class="navbar navbar-light bg-light">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="{% url 'djangoapp:index' %}">Dealer Reviews</a> <h4><i> {{dealer.full_name}}, {{dealer.state}}, ID {{dealer.id}} </i></h4>
+                <a href="/djangoapp/dealer/{{dealer.id}}/add_review/"> Add a review </a>
+            </div>
+            <ul class="nav navbar-nav navbar-right">
+                {% if user.is_authenticated %}
+                <li>
+                    <a class="btn btn-link" href="#">{{ user.first_name }}({{ user.username }})</a>
+                    <a class="btn btn-link" href="{% url 'djangoapp:logout' %}">Logout</a>
+                </li>
+                {% else %}
+                <li>
+                    <form class="form-inline" action="{% url 'djangoapp:login' %}" method="post">
+                        {% csrf_token %}
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Username" name="username" >
+                            <input type="password" class="form-control" placeholder="Username" name="psw" >
+                            <button class="btn btn-primary" type="submit">Login</button>
+                            <a class="btn btn-link" href="{% url 'djangoapp:registration' %}">Sign Up</a>
+                        </div>
+                    </form>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
     <!-- Add reviews as cards -->
+    {% if dealer_review_list %}
+    <div class="container">
+        <div class="card-deck">
+            {% for review in dealer_review_list %}
+                     <div class="card" style="width: 36rem;">
+                      <img class="card-img-left" src="{{MEDIA_URL}}/emoji/{{ review.sentiment }}.png" width="40px" height="40px"
+                           alt="Review Sentiment">
+                      <div class="card-body bg-light">
+                          <h5 class="card-title">{{ review.car_make }}, {{ review.car_model }}
+                            {{ review.car_year }} </h5>
+                            <span > {{ review.review }} <br> by {{ review.name }}  </span>
+                      </div>
+                    </div>
+            {% endfor %}
+        </div>
+    </div>
+{% else %}
+    <p>No reviews are available.</p>
+{% endif %}
 
     </body>
 

@@ -25,7 +25,7 @@ def main(dict):
     #service.post_all_docs(db='dealerships', include_docs=True).get_result()
     #service.get_database_information('reviews').result
     if ("dealerId" not in dict) or (dict["dealerId"] == ""):
-        response = service.post_all_docs(db='reviews', include_docs=True).result
+        response = service.post_all_docs(db='reviews', include_docs=True).get_result()
     else:
         response = service.post_find(
         db='reviews',
@@ -66,7 +66,28 @@ def main(dict):
         'message': 'Something went wrong'
         }
 
-#print(1, main({}))
+def main_old(dict):
+    authenticator = IAMAuthenticator(auth_dict["IAM_API_KEY"])
+    service = CloudantV1(authenticator=authenticator)
+    service.set_service_url(auth_dict["URL"])
+    response = service.post_find(
+    db='reviews',
+    selector={
+            'dealership': {'$eq': int(dict["dealerId"])}
+        }).get_result()
+    try:
+        # result_by_filter=my_database.get_query_result(selector,raw_result=True)
+        result= {
+        'headers': {'Content-Type':'application/json'},
+        'body': {'data':response}
+        }
+        return result
+    except:
+        return {
+        'statusCode': 404,
+        'message': 'Something went wrong'
+        }
+print(1, main({}))
 #print(2, main({"dealerId":""}))
 print(3, main({"dealerId":15}))
 
