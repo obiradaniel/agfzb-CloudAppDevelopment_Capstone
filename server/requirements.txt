@@ -5,4 +5,4 @@ Pillow==8.0.1
 ibm-cloud-sdk-core
 ibm-watson
 ibmcloudant
-cloundant
+cloudant
