@@ -27,7 +27,7 @@ DEBUG = True
 
 APPEND_SLASH = True
 
-ALLOWED_HOSTS = ["obiradanieldjango.mybluemix.net"]
+ALLOWED_HOSTS = ["obiradanieldjango.mybluemix.net", "localhost", "127.0.0.1"]
 #ALLOWED_HOSTS = []
 
 
