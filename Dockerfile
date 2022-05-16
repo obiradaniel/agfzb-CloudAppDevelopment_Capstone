@@ -6,7 +6,7 @@ ENV PYTHONWRITEBYTECODE 1
 RUN apt-get update \
     && apt-get install -y netcat
 
-ENV APP=/server
+ENV APP=./server
 
 # Change the workdir.
 WORKDIR $APP
@@ -14,6 +14,7 @@ WORKDIR $APP
 # Install the requirements
 COPY requirements.txt $APP
 RUN pip install --upgrade pip
+RUN pip freeze > requirements.txt
 RUN pip install -r requirements.txt
 
 # Copy the rest of the files
