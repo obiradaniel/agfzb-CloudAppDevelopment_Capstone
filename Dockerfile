@@ -6,7 +6,7 @@ ENV PYTHONWRITEBYTECODE 1
 RUN apt-get update \
     && apt-get install -y netcat
 
-ENV APP=./server
+ENV APP=/server
 
 # Change the workdir.
 WORKDIR $APP
@@ -14,7 +14,6 @@ WORKDIR $APP
 # Install the requirements
 COPY requirements.txt $APP
 RUN pip install --upgrade pip
-RUN pip freeze > requirements.txt
 RUN pip install -r requirements.txt
 
 # Copy the rest of the files
@@ -22,7 +21,7 @@ COPY . $APP
 
 EXPOSE 8000
 
-RUN chmod +x /app/entrypoint.sh
-ENTRYPOINT ["/app/entrypoint.sh"]
+RUN chmod +x ./server/entrypoint.sh
+ENTRYPOINT ["./server/entrypoint.sh"]
 
 CMD ["gunicorn", "--bind", ":8000", "--workers", "3", "djangobackend.wsgi"]
