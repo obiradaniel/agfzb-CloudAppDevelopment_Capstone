@@ -85,7 +85,7 @@ def get_dealers_from_cf(url, kwargs):
                     dealer_obj = CarDealer(address=dealer_doc["address"], city=dealer_doc["city"], full_name=dealer_doc["full_name"],
                                         id=dealer_doc["id"], lat=dealer_doc["lat"], long=dealer_doc["long"],
                                         short_name=dealer_doc["short_name"], state = dealer_doc["state"],
-                                        st=dealer_doc["st"], zip=dealer_doc["zip"])
+                                        st=dealer_doc["st"], zip=dealer_doc["zip"], totalreviews=dealer_doc["review_count"])
                     results.append(dealer_obj)
         else:
             dealers = json_result["docs"]
@@ -98,7 +98,7 @@ def get_dealers_from_cf(url, kwargs):
                     dealer_obj = CarDealer(address=dealer_doc["address"], city=dealer_doc["city"], full_name=dealer_doc["full_name"],
                                         id=dealer_doc["id"], lat=dealer_doc["lat"], long=dealer_doc["long"],
                                         short_name=dealer_doc["short_name"], state = dealer_doc["state"],
-                                        st=dealer_doc["st"], zip=dealer_doc["zip"])
+                                        st=dealer_doc["st"], zip=dealer_doc["zip"], totalreviews=dealer_doc["review_count"])
                     results.append(dealer_obj)
         # For each dealer object
         
