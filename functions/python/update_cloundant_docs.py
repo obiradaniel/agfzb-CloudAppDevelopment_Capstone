@@ -162,13 +162,16 @@ def update_dealership_review_count(review_count_dic):
     for doc_id in doc_ids:
         current_id = doc_id['id']
         db_doc = dealer_db[current_id]
-        if ('address' in db_doc) and ('id' in db_doc):
-            if db_doc['id'] in review_count_dic:
-                db_doc['review_count'] = review_count_dic[db_doc['id']]
-            else:
-                db_doc['review_count'] = 0
-        db_doc.save()
-        print("Doc save sucessful, Id ", db_doc['id'], review_count_dic[db_doc['id']], "Reviews")
+        try:
+            if ('address' in db_doc) and ('id' in db_doc):
+                if db_doc['id'] in review_count_dic:
+                    db_doc['review_count'] = review_count_dic[db_doc['id']]
+                else:
+                    db_doc['review_count'] = 0
+                db_doc.save()
+                print("Doc save sucessful, Id:", db_doc['id'],", ", review_count_dic[db_doc['id']], "Reviews")
+        except Exception as e:
+            print(e)
     
     print("All docs updated")
                 
